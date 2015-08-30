@@ -5,6 +5,7 @@
 import scrapy
 
 from dytt8.items import Dytt8Item
+from dytt8.db import sqliteDB
 
 
 class Dytt8Spider(scrapy.Spider):
@@ -19,4 +20,5 @@ class Dytt8Spider(scrapy.Spider):
         dytt8['url'] = response.url
         dytt8['name'] = response.xpath("//title/text()").extract()[0]
         dytt8['download'] = response.xpath("//td[@bgcolor='#fdfddf']/a/text()").extract()[0]
+        sqliteDB.add(dytt8)
         return dytt8
